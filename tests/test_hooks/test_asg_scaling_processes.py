@@ -72,7 +72,7 @@ class TestASGScalingProcesses(object):
         ".ASGScalingProcesses._find_autoscaling_groups"
     )
     def test_run_with_resume_argument(self, mock_find_autoscaling_groups):
-        self.asg_scaling_processes.argument = u"resume::ScheduledActions"
+        self.asg_scaling_processes.argument = "resume::ScheduledActions"
         mock_find_autoscaling_groups.return_value = ["autoscaling_group_1"]
         self.asg_scaling_processes.run()
         self.stack.connection_manager.call.assert_called_once_with(
@@ -112,7 +112,7 @@ class TestASGScalingProcesses(object):
     def test_run_with_invalid_string_argument(
         self, mock_find_autoscaling_groups
     ):
-        self.asg_scaling_processes.argument = u"invalid_string"
+        self.asg_scaling_processes.argument = "invalid_string"
         mock_find_autoscaling_groups.return_value = ["autoscaling_group_1"]
         with pytest.raises(InvalidHookArgumentSyntaxError):
             self.asg_scaling_processes.run()

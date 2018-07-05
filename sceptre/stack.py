@@ -149,7 +149,7 @@ class Stack(object):
             "NotificationARNs": self.notifications,
             "Tags": [
                 {"Key": str(k), "Value": str(v)}
-                for k, v in self.tags.items()
+                for k, v in list(self.tags.items())
             ]
         }
 
@@ -188,7 +188,7 @@ class Stack(object):
             "NotificationARNs": self.notifications,
             "Tags": [
                 {"Key": str(k), "Value": str(v)}
-                for k, v in self.tags.items()
+                for k, v in list(self.tags.items())
             ]
         }
         update_stack_kwargs.update(self.template.get_boto_call_parameter())
@@ -395,7 +395,7 @@ class Stack(object):
         desired_properties = ["LogicalResourceId", "PhysicalResourceId"]
 
         formatted_response = [
-            {k: v for k, v in item.items() if k in desired_properties}
+            {k: v for k, v in list(item.items()) if k in desired_properties}
             for item in response["StackResources"]
         ]
         return formatted_response
@@ -484,7 +484,7 @@ class Stack(object):
             "NotificationARNs": self.notifications,
             "Tags": [
                 {"Key": str(k), "Value": str(v)}
-                for k, v in self.tags.items()
+                for k, v in list(self.tags.items())
             ]
         }
         create_change_set_kwargs.update(
@@ -618,7 +618,7 @@ class Stack(object):
         :rtype: list
         """
         formatted_parameters = []
-        for name, value in parameters.items():
+        for name, value in list(parameters.items()):
             if value is None:
                 continue
             if isinstance(value, list):

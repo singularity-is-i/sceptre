@@ -187,14 +187,14 @@ def simplify_change_set_description(response):
     ]
     formatted_response = {
         k: v
-        for k, v in response.items()
+        for k, v in list(response.items())
         if k in desired_response_items
     }
     formatted_response["Changes"] = [
         {
             "ResourceChange": {
                 k: v
-                for k, v in change["ResourceChange"].items()
+                for k, v in list(change["ResourceChange"].items())
                 if k in desired_resource_changes
             }
         }

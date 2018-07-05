@@ -173,7 +173,7 @@ def get_subclasses(class_type, directory=None):
     classes = {}
 
     for module in modules:
-        for attr in module.__dict__.values():
+        for attr in list(module.__dict__.values()):
             if inspect.isclass(attr) \
                 and issubclass(attr, class_type) \
                     and not inspect.isabstract(attr):
@@ -232,7 +232,7 @@ def _call_func_on_values(func, attr, cls):
             _call_func_on_values(func, value, cls)
 
     if isinstance(attr, dict):
-        for key, value in attr.items():
+        for key, value in list(attr.items()):
             func_on_instance(key)
     elif isinstance(attr, list):
         for index, value in enumerate(attr):

@@ -152,13 +152,13 @@ def _create_config_file(config_dir, path, defaults={}):
     config.update(parent_config)
 
     # Ask for new values
-    for key, value in config.items():
+    for key, value in list(config.items()):
         config[key] = click.prompt(
             'Please enter a {0}'.format(key), default=value
         )
 
     # Remove values if parent config are the same
-    config = {k: v for k, v in config.items() if parent_config.get(k) != v}
+    config = {k: v for k, v in list(config.items()) if parent_config.get(k) != v}
 
     # Write config.yaml if config not empty
     filepath = os.path.join(path, "config.yaml")

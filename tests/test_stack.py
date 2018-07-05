@@ -980,7 +980,7 @@ class TestStack(object):
 
         for i, status in enumerate(return_values['Status']):
             for exec_status, returns in \
-                    return_values['ExecutionStatus'].items():
+                    list(return_values['ExecutionStatus'].items()):
                 mock_describe_change_set.return_value = {
                     "Status": status,
                     "ExecutionStatus": exec_status
@@ -996,7 +996,7 @@ class TestStack(object):
             with pytest.raises(UnknownStackChangeSetStatusError):
                 self.stack._get_cs_status(sentinel.change_set_name)
 
-        for exec_status in return_values['ExecutionStatus'].keys():
+        for exec_status in list(return_values['ExecutionStatus'].keys()):
             mock_describe_change_set.return_value = {
                 "Status": 'UNKOWN_STATUS',
                 "ExecutionStatus": exec_status

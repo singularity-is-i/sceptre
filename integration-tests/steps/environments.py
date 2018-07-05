@@ -11,7 +11,7 @@ from templates import set_template_path
 
 @given('environment "{environment_name}" does not exist')
 def step_impl(context, environment_name):
-    full_stack_names = get_full_stack_names(context, environment_name).values()
+    full_stack_names = list(get_full_stack_names(context, environment_name).values())
 
     delete_stacks(context, full_stack_names)
 
@@ -20,7 +20,7 @@ def step_impl(context, environment_name):
 
 @given('all the stacks in environment "{environment_name}" are in "{status}"')
 def step_impl(context, environment_name, status):
-    full_stack_names = get_full_stack_names(context, environment_name).values()
+    full_stack_names = list(get_full_stack_names(context, environment_name).values())
 
     response = retry_boto_call(context.client.describe_stacks)
 
@@ -67,14 +67,14 @@ def step_impl(context, environment_name):
 
 @then('all the stacks in environment "{environment_name}" are in "{status}"')
 def step_impl(context, environment_name, status):
-    full_stack_names = get_full_stack_names(context, environment_name).values()
+    full_stack_names = list(get_full_stack_names(context, environment_name).values())
 
     check_stack_status(context, full_stack_names, status)
 
 
 @then('all the stacks in environment "{environment_name}" do not exist')
 def step_impl(context, environment_name):
-    full_stack_names = get_full_stack_names(context, environment_name).values()
+    full_stack_names = list(get_full_stack_names(context, environment_name).values())
 
     check_stack_status(context, full_stack_names, None)
 
@@ -101,11 +101,11 @@ def step_impl(context, environment_name):
     stacks_names = get_full_stack_names(context, environment_name)
     expected_resources = {}
     sceptre_response = []
-    for stack_resources in context.response.values():
+    for stack_resources in list(context.response.values()):
         for resource in stack_resources:
             sceptre_response.append(resource["PhysicalResourceId"])
 
-    for short_name, full_name in stacks_names.items():
+    for short_name, full_name in list(stacks_names.items()):
         time.sleep(1)
         response = retry_boto_call(
             context.client.describe_stack_resources,
@@ -113,7 +113,7 @@ def step_impl(context, environment_name):
         )
         expected_resources[short_name] = response["StackResources"]
 
-    for short_name, resources in expected_resources.items():
+    for short_name, resources in list(expected_resources.items()):
         for resource in resources:
             sceptre_response.remove(resource["PhysicalResourceId"])
 
@@ -124,7 +124,7 @@ def step_impl(context, environment_name):
 def step_impl(context, stack_name):
     expected_resources = {}
     sceptre_response = []
-    for stack_resources in context.response.values():
+    for stack_resources in list(context.response.values()):
         for resource in stack_resources:
             sceptre_response.append(resource["PhysicalResourceId"])
 
@@ -134,7 +134,7 @@ def step_impl(context, stack_name):
     )
     expected_resources[stack_name] = response["StackResources"]
 
-    for short_name, resources in expected_resources.items():
+    for short_name, resources in list(expected_resources.items()):
         for resource in resources:
             sceptre_response.remove(resource["PhysicalResourceId"])
 

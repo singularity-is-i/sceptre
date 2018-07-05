@@ -252,7 +252,7 @@ class Environment(object):
                 for dependency in dependencies
                 if dependency.startswith(top_level_environment_path)
             ]
-            for stack_name, dependencies in all_dependencies.items()
+            for stack_name, dependencies in list(all_dependencies.items())
         }
         return launch_dependencies
 
@@ -268,7 +268,7 @@ class Environment(object):
         delete_dependencies = {
             stack_name: [] for stack_name in launch_dependencies
         }
-        for stack_name, dependencies in launch_dependencies.items():
+        for stack_name, dependencies in list(launch_dependencies.items()):
             for dependency in dependencies:
                 delete_dependencies[dependency].append(stack_name)
         return delete_dependencies

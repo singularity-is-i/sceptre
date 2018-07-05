@@ -37,6 +37,6 @@ def delete_command(ctx, path, change_set_name, yes):
         confirmation(action, yes, environment=path)
         response = env.delete()
         if not all(
-            status == StackStatus.COMPLETE for status in response.values()
+            status == StackStatus.COMPLETE for status in list(response.values())
         ):
             exit(1)

@@ -7,7 +7,7 @@ from sceptre.helpers import _call_func_on_values
 
 
 @six.add_metaclass(abc.ABCMeta)
-class Resolver():
+class Resolver(metaclass=abc.ABCMeta):
     """
     Resolver is an abstract base class that should be inherited by all
     resolvers.
@@ -17,8 +17,6 @@ class Resolver():
     :param stack: The associated stack of the resolver.
     :type stack: sceptre.stack.Stack
     """
-
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, argument=None, stack=None):
         self.logger = logging.getLogger(__name__)

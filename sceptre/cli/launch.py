@@ -31,6 +31,6 @@ def launch_command(ctx, path, yes):
         confirmation(action, yes, environment=path)
         response = env.launch()
         if not all(
-            status == StackStatus.COMPLETE for status in response.values()
+            status == StackStatus.COMPLETE for status in list(response.values())
         ):
             exit(1)

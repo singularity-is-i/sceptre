@@ -124,7 +124,7 @@ class ConfigReader(object):
         for group in entry_point_groups:
             for entry_point in iter_entry_points(group):
                 # Retrieve name and class from entry point
-                node_tag = u'!' + entry_point.name
+                node_tag = '!' + entry_point.name
                 node_class = entry_point.load()
 
                 # Add constructor to PyYAML loader
@@ -385,9 +385,9 @@ class ConfigReader(object):
             for item in items if not item.endswith("config.yaml")
         }
 
-        is_leaf = not any([path.isdir(abs_path) for abs_path in paths.keys()])
+        is_leaf = not any([path.isdir(abs_path) for abs_path in list(paths.keys())])
 
-        for abs_path, rel_path in paths.items():
+        for abs_path, rel_path in list(paths.items()):
             if not is_leaf and path.isdir(abs_path):
                 environment.sub_environments.append(
                     self.construct_environment(rel_path)

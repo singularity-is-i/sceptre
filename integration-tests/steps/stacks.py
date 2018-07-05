@@ -190,7 +190,7 @@ def step_impl(context, stack_name):
 
     properties = {"LogicalResourceId", "PhysicalResourceId"}
     formatted_response = [
-            {k: v for k, v in item.items() if k in properties}
+            {k: v for k, v in list(item.items()) if k in properties}
             for item in response["StackResources"]
     ]
 

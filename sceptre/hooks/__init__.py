@@ -5,7 +5,7 @@ from functools import wraps
 from sceptre.helpers import _call_func_on_values
 
 
-class Hook(object):
+class Hook(object, metaclass=abc.ABCMeta):
     """
     Hook is an abstract base class that should be inherited by all hooks.
 
@@ -14,7 +14,6 @@ class Hook(object):
     :param stack: The associated stack of the hook.
     :type stack: sceptre.stack.Stack
     """
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, argument=None, stack=None):
         self.logger = logging.getLogger(__name__)

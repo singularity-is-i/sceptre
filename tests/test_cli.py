@@ -108,7 +108,7 @@ class TestCli(object):
 
         self.patcher_getcwd.stop()
         with self.runner.isolated_filesystem():
-            for name, content in files.items():
+            for name, content in list(files.items()):
                 with open(name, "w") as fh:
                     yaml.safe_dump(content, fh)
 
@@ -637,7 +637,7 @@ class TestCli(object):
             os.makedirs(config_dir)
 
             env_dir = os.path.join(sceptre_dir, "config", environment)
-            for env_path, config in config_structure.items():
+            for env_path, config in list(config_structure.items()):
                 path = os.path.join(config_dir, env_path)
                 try:
                     os.makedirs(path)
